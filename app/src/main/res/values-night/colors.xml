@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#121315</color>
+    <color name="colorPrimaryDark">#121315</color>
+    <color name="colorAccent">#F44236</color>
+    <color name="colorAccentSecondary">#FACB03</color>
+    <color name="colorText">#C0C1C3</color>
+    <color name="colorTextSecondary">#8D8E90</color>
+    <color name="colorIcon">#ACADAF</color>
+    <color name="colorLine">#5A5B5D</color>
+    <color name="colorBackground">#121315</color>
+    <color name="colorBackgroundCard">#3C3B3B</color>
+    <color name="colorBackgroundSecondary">#262626</color>
+    <color name="colorBackgroundStart">#282A2E</color>
+    <color name="colorBackgroundEnd">#282A2E</color>
+
+    <color name="colorChipSelected">#262626</color>
+    <color name="colorChipUnselected">#121315</color>
+
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+
+    <color name="colorLight1">#F8D5D3</color>
+    <color name="colorLightIcon1">#E23E32</color>
+</resources>

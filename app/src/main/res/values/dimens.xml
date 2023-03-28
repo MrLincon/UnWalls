@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sidePadding">10dp</dimen>
+    <dimen name="topPadding">10dp</dimen>
+    <dimen name="bottomPadding">10dp</dimen>
+    <dimen name="leftPadding">10dp</dimen>
+    <dimen name="rightPadding">10dp</dimen>
+
+    <dimen name="grid_spacing">10dp</dimen>
+
+    <dimen name="horizontalStart">16dp</dimen>
+    <dimen name="horizontalBetween">8dp</dimen>
+    <dimen name="horizontalEnd">16dp</dimen>
+
+    <dimen name="toolBarHeight">56dp</dimen>
+    <dimen name="search">80dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>
