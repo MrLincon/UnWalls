@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageAdapter adapter;
 
     String searchText;
+    String selectedChipText;
 
     private int page = 1;
     private int pageSize = 30;
@@ -96,9 +97,14 @@ public class MainActivity extends AppCompatActivity {
         chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(ChipGroup group, int checkedId) {
+
+
                 Chip selectedChip = group.findViewById(checkedId);
-                String selectedChipText = selectedChip.getText().toString();
-                if (isSearchClicked != true) {
+                if (selectedChip == null) {
+                    return;
+                }
+                selectedChipText = (String) selectedChip.getChipText();
+                if (isSearchClicked != true && !selectedChipText.equals(searchText)) {
                     tools.loading(popup, true);
                     if (selectedChipText.equals("All")) {
                         adapter.notifyDataSetChanged();
@@ -116,38 +122,43 @@ public class MainActivity extends AppCompatActivity {
                         searchData(searchText);
                         setUpRecyclerViewScroll();
                     }
+                    selectedChip.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+
+                            isSearchClicked = false;
+                            if (isSearchClicked != true && !selectedChipText.equals(searchText)) {
+                                etSearch.setText("");
+                                tools.loading(popup, true);
+                                if (selectedChipText.equals("All")) {
+                                    adapter.notifyDataSetChanged();
+                                    recyclerView.scrollToPosition(0);
+                                    list.clear();
+                                    page = 1;
+                                    getData();
+                                    setUpRecyclerViewScroll();
+                                } else {
+                                    searchText = selectedChipText;
+                                    adapter.notifyDataSetChanged();
+                                    recyclerView.scrollToPosition(0);
+                                    list.clear();
+                                    page = 1;
+                                    searchData(searchText);
+                                    setUpRecyclerViewScroll();
+                                }
+
+                            }
+                        }
+                    });
                 }
+
 
                 if (!selectedChipText.equals("Search")) {
                     searchChip.setVisibility(View.GONE);
                 }
 
-                selectedChip.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        etSearch.setText("");
-                        isSearchClicked = false;
-                        if (isSearchClicked != true) {
-                            tools.loading(popup, true);
-                            if (selectedChipText.equals("All")) {
-                                adapter.notifyDataSetChanged();
-                                recyclerView.scrollToPosition(0);
-                                list.clear();
-                                page = 1;
-                                getData();
-                                setUpRecyclerViewScroll();
-                            } else {
-                                searchText = selectedChipText;
-                                adapter.notifyDataSetChanged();
-                                recyclerView.scrollToPosition(0);
-                                list.clear();
-                                page = 1;
-                                searchData(searchText);
-                                setUpRecyclerViewScroll();
-                            }
-                        }
-                    }
-                });
+
             }
         });
 

@@ -60,6 +60,7 @@
                     android:layout_height="wrap_content"
                     app:singleLine="true"
                     app:checkedChip="@id/all_chip"
+                    app:selectionRequired="true"
                     app:singleSelection="true">
 
                     <com.google.android.material.chip.Chip
