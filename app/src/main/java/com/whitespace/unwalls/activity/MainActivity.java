@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,73 +93,113 @@ public class MainActivity extends AppCompatActivity {
         setUpRecyclerViewScroll();
 
 
-        chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(ChipGroup group, int checkedId) {
+        chipGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            Chip selectedChip = group.findViewById(checkedId);
+            if (selectedChip == null) return;
 
+            String selectedChipText = selectedChip.getChipText().toString();
 
-                Chip selectedChip = group.findViewById(checkedId);
-                if (selectedChip == null) {
-                    return;
-                }
-                selectedChipText = (String) selectedChip.getChipText();
-                if (isSearchClicked != true && !selectedChipText.equals(searchText)) {
-                    tools.loading(popup, true);
-                    if (selectedChipText.equals("All")) {
-                        adapter.notifyDataSetChanged();
-                        recyclerView.scrollToPosition(0);
-                        list.clear();
-                        page = 1;
-                        getData();
-                        setUpRecyclerViewScroll();
-                    } else {
-                        searchText = selectedChipText;
-                        adapter.notifyDataSetChanged();
-                        recyclerView.scrollToPosition(0);
-                        list.clear();
-                        page = 1;
-                        searchData(searchText);
-                        setUpRecyclerViewScroll();
-                    }
-                    selectedChip.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-
-                            isSearchClicked = false;
-                            if (isSearchClicked != true && !selectedChipText.equals(searchText)) {
-                                etSearch.setText("");
-                                tools.loading(popup, true);
-                                if (selectedChipText.equals("All")) {
-                                    adapter.notifyDataSetChanged();
-                                    recyclerView.scrollToPosition(0);
-                                    list.clear();
-                                    page = 1;
-                                    getData();
-                                    setUpRecyclerViewScroll();
-                                } else {
-                                    searchText = selectedChipText;
-                                    adapter.notifyDataSetChanged();
-                                    recyclerView.scrollToPosition(0);
-                                    list.clear();
-                                    page = 1;
-                                    searchData(searchText);
-                                    setUpRecyclerViewScroll();
-                                }
-
-                            }
-                        }
-                    });
-                }
-
-
-                if (!selectedChipText.equals("Search")) {
-                    searchChip.setVisibility(View.GONE);
-                }
-
-
+            if (selectedChipText.equals("Search")) {
+                searchChip.setVisibility(View.VISIBLE);
+                return;
+            } else {
+                searchChip.setVisibility(View.GONE);
             }
+
+            if (isSearchClicked || selectedChipText.equals(searchText)) return;
+
+            isSearchClicked = false;
+            etSearch.setText("");
+            tools.loading(popup, true);
+            adapter.notifyDataSetChanged();
+            recyclerView.scrollToPosition(0);
+            list.clear();
+            page = 1;
+
+            searchText = "";
+            if (selectedChipText.equals("All")) {
+                getData();
+            } else {
+                searchText = selectedChipText;
+                searchData(searchText);
+            }
+
+            setUpRecyclerViewScroll();
         });
+
+
+
+//        chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(ChipGroup group, int checkedId) {
+//                Log.d(TAG, "onCheckedChanged: "+"onCheckedChanged");
+//
+//                Chip selectedChip = group.findViewById(checkedId);
+//                if (selectedChip != null) {
+//                    Log.d(TAG, "onCheckedChanged: " + "NULL");
+//
+//                    selectedChipText = (String) selectedChip.getChipText();
+//                    if (isSearchClicked != true && !selectedChipText.equals(searchText)) {
+//                        tools.loading(popup, true);
+//                        if (selectedChipText.equals("All")) {
+//                            adapter.notifyDataSetChanged();
+//                            recyclerView.scrollToPosition(0);
+//                            list.clear();
+//                            page = 1;
+//                            getData();
+//                            setUpRecyclerViewScroll();
+//
+//                            Log.d(TAG, "selectedChip: " + "All");
+//                        } else {
+//                            searchText = selectedChipText;
+//                            adapter.notifyDataSetChanged();
+//                            recyclerView.scrollToPosition(0);
+//                            list.clear();
+//                            page = 1;
+//                            searchData(searchText);
+//                            setUpRecyclerViewScroll();
+//                            Log.d(TAG, "selectedChip: " + selectedChipText + "selected");
+//                        }
+//                        selectedChip.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//
+//                                isSearchClicked = false;
+//                                if (isSearchClicked != true && !selectedChipText.equals(searchText)) {
+//                                    etSearch.setText("");
+//                                    tools.loading(popup, true);
+//                                    if (selectedChipText.equals("All")) {
+//                                        adapter.notifyDataSetChanged();
+//                                        recyclerView.scrollToPosition(0);
+//                                        list.clear();
+//                                        page = 1;
+//                                        getData();
+//                                        setUpRecyclerViewScroll();
+//
+//                                        Log.d(TAG, "selectedChip: " + "All");
+//                                    } else {
+//                                        searchText = selectedChipText;
+//                                        adapter.notifyDataSetChanged();
+//                                        recyclerView.scrollToPosition(0);
+//                                        list.clear();
+//                                        page = 1;
+//                                        searchData(searchText);
+//                                        setUpRecyclerViewScroll();
+//
+//                                        Log.d(TAG, "selectedChip: " + selectedChipText + "selected");
+//                                    }
+//
+//                                }
+//                            }
+//                        });
+//                    }
+//
+//                    if (!selectedChipText.equals("Search")) {
+//                        searchChip.setVisibility(View.GONE);
+//                    }
+//                }
+//            }
+//        });
 
         category.setOnClickListener(new View.OnClickListener() {
             @Override
