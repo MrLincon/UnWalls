@@ -106,6 +106,32 @@ public class MainActivity extends AppCompatActivity {
                 searchChip.setVisibility(View.GONE);
             }
 
+            selectedChip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    isSearchClicked = false;
+
+                    if (isSearchClicked || selectedChipText.equals(searchText)) return;
+
+                    etSearch.setText("");
+                    tools.loading(popup, true);
+                    adapter.notifyDataSetChanged();
+                    recyclerView.scrollToPosition(0);
+                    list.clear();
+                    page = 1;
+
+                    searchText = "";
+                    if (selectedChipText.equals("All")) {
+                        getData();
+                    } else {
+                        searchText = selectedChipText;
+                        searchData(searchText);
+                    }
+
+                    setUpRecyclerViewScroll();
+                }
+            });
+
             if (isSearchClicked || selectedChipText.equals(searchText)) return;
 
             isSearchClicked = false;
